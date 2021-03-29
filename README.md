@@ -2,13 +2,15 @@
 > This project automates the installation and configuration of an ELK stack deployment on an Ubuntu 18.04 server. In this setup, there are a total of 4 Ubuntu 18.04 servers running on Azure. One server runs the ELK stack, the remaining three are web servers that are used to collect and monitor system resources and logs. Docker and Ansible are used to deploy and configure the web and elk servers.
 
 ## Architecture Diagram
-<p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/CS2021-Project-1-Architecture1.png" width="1000" height="800" alt="CS2021 Project 1 ELK Stack Architecture Diagram" /></p>
+<p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/CS2021-Project-1-Architecture1.png" width="1200" height="800" alt="CS2021 Project 1 ELK Stack Architecture Diagram" /></p>
 
 ## Architecture Overview
 The main reason for this setup of 5 Ubuntu servers on the Azure platform is to have an environment that a Cybersecurity student can use to quickly deploy various servers and services which include:
-- three (3) DVWA web servers configured behind an HTTP load balancer with restricted public access
-- one (1) publicly-accessible SSH bastion server (jumpbox) that serves as a central management server for accessing and administering all the other servers on an internal network
-- one (1) publicly-accessible ELK server through HTTP that will collect and monitor system resources and logs of the three DVWA web servers
+1. three (3) DVWA web servers configured behind an HTTP load balancer with restricted public access
+
+2. one (1) publicly-accessible SSH bastion server (jumpbox) that serves as a central management server for accessing and administering all the other servers on an internal network
+
+3. one (1) publicly-accessible ELK server through HTTP that will collect and monitor system resources and logs of the three DVWA web servers
 
 ## Azure Setup
 Since this was the first time using Azure, the network and server set up was done using the GUI. I will include screenshots of the important components, but, in a nutshell, these are the steps taken to setup the environment shown in the diagram.
@@ -35,7 +37,9 @@ Since this was the first time using Azure, the network and server set up was don
 
 6. Create one Ubuntu ELK server with static IP
 
+7. Install and configure DVWA and ELK on web and ELK servers using Ansible playbooks
 
+### Azure Images
 
 
 
