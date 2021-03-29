@@ -6,12 +6,38 @@
 
 ## Architecture Overview
 The main reason for this setup of 5 Ubuntu servers on the Azure platform is to have an environment that a Cybersecurity student can use to quickly deploy various servers and services which include:
-- three DVWA web servers configured behind an HTTP load balancer with restricted public access
-- a publicly-accessible SSH bastion server (jumpbox) that serves as a central management server for accessing and administering all the other servers on an internal network
-- a publicly-accessible ELK server through HTTP that will collect and monitor system resources and logs of the three DVWA web servers
-
+- three (3) DVWA web servers configured behind an HTTP load balancer with restricted public access
+- one (1) publicly-accessible SSH bastion server (jumpbox) that serves as a central management server for accessing and administering all the other servers on an internal network
+- one (1) publicly-accessible ELK server through HTTP that will collect and monitor system resources and logs of the three DVWA web servers
 
 ## Azure Setup
+Since this was the first time using Azure, the network and server set up was done using the GUI. I will include screenshots of the important components, but, in a nutshell, these are the steps taken to setup the environment shown in the diagram.
+
+1. Register for a free Azure account
+ 
+- 30 day trial with 200$ credit and limit of 4 VMs per region
+
+2. Create an Azure Resource Group to contain all related components of this project
+
+- virtual machines, networks, load balancers, security groups
+
+3. Create 2 virtual networks; one in West US 2, the other in Central US
+
+- assign IP subnets for the servers
+
+4. Create one Ubuntu bastion server with static IP
+
+- install docker and configure it to run persistently
+- install image, cyberxsecurity/ansible
+- enter ansible image and generate root rsa pub/priv key pair
+
+5. Create three Ubuntu servers using ansible public key and same user name on all three web servers
+
+6. Create one Ubuntu ELK server with static IP
+
+
+
+
 
 
 ## Ansible Provisioner Setup 
