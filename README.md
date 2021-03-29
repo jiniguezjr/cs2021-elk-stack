@@ -3,11 +3,19 @@
 
 ## Architecture Diagram
 <p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/CS2021-Project-1-Architecture1.png" width="1000" height="800" alt="CS2021 Project 1 ELK Stack Architecture Diagram" /></p>
+
 ## Architecture Overview
+The main reason for this setup of 5 Ubuntu servers on the Azure platform is to have an environment that a Cybersecurity student can use to quickly deploy various servers and services which include:
+- three DVWA web servers configured behind an HTTP load balancer with restricted public access
+- a publicly-accessible SSH bastion server (jumpbox) that serves as a central management server for accessing and administering all the other servers on an internal network
+- a publicly-accessible ELK server through HTTP that will collect and monitor system resources and logs of the three DVWA web servers
+
 
 ## Azure Setup
 
+
 ## Ansible Provisioner Setup 
+
 
 ## DVWA Server Setup
 
