@@ -40,12 +40,15 @@ Since this was the first time using Azure, the network and server set up was don
 7. Install and configure DVWA and ELK on web and ELK servers using Ansible playbooks
 
 ### Azure Images
+#### 1. Azure Resource Group Items
 
+#### 2. Azure Virtual Machines
+#### 3. Azure Network Security Groups
 
-
+#### 4. Azure Virtual Networks Peering Setup
+#### 5. Azure Load Balancer Backend Pool 
 
 ## Ansible Provisioner Setup 
-
 
 ## DVWA Server Setup
 
@@ -56,4 +59,4 @@ Since this was the first time using Azure, the network and server set up was don
 
 ## Author
 
-I'm [Jesse Iniguez Jr](https://www.linkedin.com/in/jesseiniguez/), and I approve of this repository.
+I'm [Jesse Iniguez Jr](https://www.linkedin.com/in/jesseiniguez/), and I approve of this repository. :)
