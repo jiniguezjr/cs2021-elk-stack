@@ -42,14 +42,19 @@ Since this was the first time using Azure, the network and server set up was don
 ### Azure Images
 #### 1. Azure Resource Group Items
 <p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-resource-group-list.png" alt="Azure Resource Group List" /></p>
+
 #### 2. Azure Virtual Machines
 <p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-VM-list.png" alt="Azure Virtual Machines" /></p>
+
 #### 3. Azure Network Security Groups
 <p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-main-net-sec-group-rules.png" alt="Azure Network Security Group Rules" /></p>
+
 #### 4. Azure Virtual Networks Peering Setup
 <p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-virtual-networks-peering-setup.png" alt="Azure Virtual Networks Peering Setup" /></p>
+
 #### 5. Azure Load Balancer Backend Pool 
 <p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-load-balancer-backend-pool.png" alt="Azure Load Balancer Backend Pool" /></p>
+
 ## Ansible Provisioner Setup 
 
 ## DVWA Server Setup
