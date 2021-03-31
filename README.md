@@ -40,6 +40,14 @@ Since this was the first time using Azure, the network and server set up was don
 7. Install and configure DVWA and ELK on web and ELK servers using Ansible playbooks
 
 ### Azure Images
+The images below visually represents all of the components needed to set up the servers (hardware, disks, ram, cpu, etc) and network components (subnets, firewalls, , network interfaces, load balancers, etc) required for this architecture. 
+
+*The following points relate to the images below.*
+1. The Azure Resource Group, CS2021_RG1, is a logical container that groups together related resources. Tags were added at this level in order to clearly identify resources that are related and to aid in properly associating costs to the right project or customer should you wish to group resources separately.
+2. The virtual machines listed here are named according to their purpose and are placed in the appropriate location and with the minimum required hardware specs to fulfill it's role.
+3. The network security groups.....
+4. A virtual network peering connection is needed in order for resources in different locations (aka regions) to communicate to and from each location.
+5. A load balancer was created to distribute the HTTP traffic amongst the three web servers. A backend pool was configured and is what receives the public IP address which can be configured to resolve using a DNS A or CNAME record (e.g. www.hack-me.com)
 #### 1. Azure Resource Group Items
 <p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-resource-group-list.png" alt="Azure Resource Group List" /></p>
 
