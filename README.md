@@ -156,7 +156,6 @@ The Ubuntu server created in this architecture is solely meant to operate a dock
 
 *main ansible configuration with global settings*
 
-    ```
     root@633f48857065:~# cat /etc/ansible/ansible.cfg | egrep -v '^#|^$'
     [defaults]
     remote_user = jinig
@@ -171,10 +170,9 @@ The Ubuntu server created in this architecture is solely meant to operate a dock
     [selinux]
     [colors]
     [diff]
-    ```
+
 #### Testing Ansible Connectivity
 
-    ```
     root@633f48857065:~# cat /etc/ansible/ansible.cfg | egrep -v '^#|^$'
     [defaults]
     remote_user = jinig
@@ -189,7 +187,6 @@ The Ubuntu server created in this architecture is solely meant to operate a dock
     [selinux]
     [colors]
     [diff]
-    ```
 
 #### Testing Ansible Connectivity
 
