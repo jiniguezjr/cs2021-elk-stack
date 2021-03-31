@@ -276,10 +276,118 @@ The Damn Vulnerable Web Application is used by cybersecurity professionals to te
     10.2.0.4                   : ok=7    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
 
 ### Verify ELK is functioning
-*access each DVWA server individually (i.e. with only 1 server online at a time) using the load balancer public IP*
+*access the ELK server by IP and port 5601*
 
-![ELK available through browser](Images)
+![ELK available through browser](Images/ELK-stack-project-1-ELK-test-access.png)
 ### ELK + Beats Setup
+Beats are *single-purpose data shippers* that send metrics from clients (in this case, the 3 DVWA servers) to the ELK server so that we can closely monitor the usage and health of the clients. The two minimum beats that a cybersecurity professional would want is [metricbeats](https://www.elastic.co/beats/metricbeat) and [filebeat](https://www.elastic.co/beats/filebeat). The former captures statistics about the system resources (e.g. ram, cpu, I/O, network), the later allows you to capture system and application logs for a closer watch on your systems for abnormal and suspicious patterns (i.e. invalid SSH attempts, hardware problems, etc).
+
+**[metricbeat Ansible playbook](Files/metricbeat-playbook.yml)**
+**[filebeat Ansible playbook](Files/filebeat-playbook.yml)**
+
+#### Install metricbeat using Ansible
+
+    root@633f48857065:/etc/ansible# ansible-playbook --check roles/metricbeat-playbook.yml
+
+    PLAY [Install metric beat] **********************************************************************************************************************************************************
+
+    TASK [Gathering Facts] **************************************************************************************************************************************************************
+    ok: [10.0.0.8]
+    ok: [10.0.0.7]
+    ok: [10.0.0.9]
+
+    TASK [Download metricbeat] **********************************************************************************************************************************************************
+    skipping: [10.0.0.8]
+    skipping: [10.0.0.7]
+    skipping: [10.0.0.9]
+
+    TASK [install metricbeat deb] *******************************************************************************************************************************************************
+    skipping: [10.0.0.7]
+    skipping: [10.0.0.8]
+    skipping: [10.0.0.9]
+
+    TASK [drop in metricbeat config] ****************************************************************************************************************************************************
+    ok: [10.0.0.8]
+    ok: [10.0.0.9]
+    ok: [10.0.0.7]
+
+    TASK [enable and configure docker module for metric beat] ***************************************************************************************************************************
+    skipping: [10.0.0.8]
+    skipping: [10.0.0.7]
+    skipping: [10.0.0.9]
+
+    TASK [setup metric beat] ************************************************************************************************************************************************************
+    skipping: [10.0.0.7]
+    skipping: [10.0.0.8]
+    skipping: [10.0.0.9]
+
+    TASK [start metric beat with service] ***********************************************************************************************************************************************
+    skipping: [10.0.0.7]
+    skipping: [10.0.0.8]
+    skipping: [10.0.0.9]
+
+    TASK [enable service metricbeat on boot] ********************************************************************************************************************************************
+    ok: [10.0.0.8]
+    ok: [10.0.0.7]
+    ok: [10.0.0.9]
+
+    PLAY RECAP **************************************************************************************************************************************************************************
+    10.0.0.7                   : ok=3    changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
+    10.0.0.8                   : ok=3    changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
+    10.0.0.9                   : ok=3    changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
+
+#### Install filebeat using Ansible
+
+    root@633f48857065:/etc/ansible# ansible-playbook --check roles/filebeat-playbook.yml
+
+    PLAY [installing and launching filebeat] ********************************************************************************************************************************************
+
+    TASK [Gathering Facts] **************************************************************************************************************************************************************
+    ok: [10.0.0.8]
+    ok: [10.0.0.7]
+    ok: [10.0.0.9]
+
+    TASK [download filebeat deb] ********************************************************************************************************************************************************
+    skipping: [10.0.0.8]
+    skipping: [10.0.0.9]
+    skipping: [10.0.0.7]
+
+    TASK [install filebeat deb] *********************************************************************************************************************************************************
+    skipping: [10.0.0.8]
+    skipping: [10.0.0.7]
+    skipping: [10.0.0.9]
+
+    TASK [drop in filebeat.yml] *********************************************************************************************************************************************************
+    ok: [10.0.0.8]
+    ok: [10.0.0.9]
+    ok: [10.0.0.7]
+
+    TASK [enable and configure system module] *******************************************************************************************************************************************
+    skipping: [10.0.0.7]
+    skipping: [10.0.0.8]
+    skipping: [10.0.0.9]
+
+    TASK [setup filebeat] ***************************************************************************************************************************************************************
+    skipping: [10.0.0.7]
+    skipping: [10.0.0.8]
+    skipping: [10.0.0.9]
+
+    TASK [start filebeat service] *******************************************************************************************************************************************************
+    skipping: [10.0.0.8]
+    skipping: [10.0.0.7]
+    skipping: [10.0.0.9]
+
+    TASK [enable service filebeat on boot] **********************************************************************************************************************************************
+    ok: [10.0.0.8]
+    ok: [10.0.0.9]
+    ok: [10.0.0.7]
+
+    PLAY RECAP **************************************************************************************************************************************************************************
+    10.0.0.7                   : ok=3    changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
+    10.0.0.8                   : ok=3    changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
+    10.0.0.9                   : ok=3    changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
+
+### ELK Server Testing
 
 ## Author
 
