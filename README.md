@@ -139,6 +139,7 @@ The Ubuntu server created in this architecture is solely meant to operate a dock
     docker attach goofy_mendeleev
 
 ### Ansible Configuration
+
 #### /etc/ansible/hosts
 
 *inventory file with groups of like servers*
@@ -150,9 +151,25 @@ The Ubuntu server created in this architecture is solely meant to operate a dock
     10.0.0.9 ansible_python_interpreter=/usr/bin/python3
     [elkservers]
     10.2.0.4 ansible_python_interpreter=/usr/bin/python3
+
 #### /etc/ansible/ansible.cfg
 
 *main ansible configuration with global settings*
+
+    root@633f48857065:~# cat /etc/ansible/ansible.cfg | egrep -v '^#|^$'
+    [defaults]
+    remote_user = jinig
+    log_path = /var/log/ansible.log
+    module_name = command
+    [inventory]
+    [privilege_escalation]
+    [paramiko_connection]
+    [ssh_connection]
+    [persistent_connection]
+    [accelerate]
+    [selinux]
+    [colors]
+    [diff]
 
     root@633f48857065:~# cat /etc/ansible/ansible.cfg | egrep -v '^#|^$'
     [defaults]
