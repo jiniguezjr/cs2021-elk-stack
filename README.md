@@ -81,7 +81,105 @@ Azure Network Security Group rules are used to filter network traffic to and fro
 | Elk-1-nsg               | 65001         | n/a         | allow all inbound requests (any protocol and port) from the load balancer to any on virtual network  |
 | Elk-1-nsg               | 65500         | n/a         | deny all inbound requests (any protocol and port) from any to any   |
 
-## Ansible Provisioner Setup 
+## Ansible Provisioner 
+The Ubuntu server created in this architecture is solely meant to operate a docker container with Ansible which is used as a central point to deploy infrastructure-as-code configuration sets to web and elk servers. Deployment is done using SSH and a passphrase-less RSA key-pair created under the root user in the Ansible container. The web and elk servers were built using the public key from the Ansible root user and is the only means of connecting to the servers to ensure that there is no manual installation and configuration of applications and system settings on the servers in this architecture. Refer to the [**Architecture Diagram**](https://github.com/jiniguezjr/cs2021-elk-stack#architecture-diagram) as a visual aid.
+### Ease of Administration
+*create ssh config file for easy connectivity*
+    jinig@UbuntuBastionProvisioner:~$ touch ~/.ssh/config && chmod -v 0600 ~/.ssh/config
+    mode of '/home/jinig/.ssh/config' retained as 0600 (rw-------)
+    jinig@UbuntuBastionProvisioner:~$ cat .ssh/config
+    # Created 3/10/21
+    Host web1
+            HostName 10.0.0.9
+            User jinig
+            IdentityFile ~/.ssh/id_rsa
+    # Created 3/10/21
+    Host web2
+            HostName 10.0.0.7
+            User jinig
+            IdentityFile ~/.ssh/id_rsa
+    # Created 3/17/21
+    Host web3
+            HostName 10.0.0.8
+            User jinig
+            IdentityFile ~/.ssh/id_rsa
+    # Created 3/20/21
+    Host elk1 elk-1
+            HostName 10.2.0.4
+            User jinig
+            IdentityFile ~/.ssh/id_rsa
+
+*verify ssh connectivity*
+    jinig@UbuntuBastionProvisioner:~$ for host in `grep HostName .ssh/config | awk '{print $2}'` ; do ssh jinig@${host} 'hostname;whoami;uptime' ; done
+    Web-1
+    jinig
+    03:52:00 up  3:09,  0 users,  load average: 0.00, 0.01, 0.00
+    Web-2
+    jinig
+    03:52:01 up  3:09,  0 users,  load average: 0.00, 0.04, 0.01
+    Web-3
+    jinig
+    03:52:02 up  3:09,  0 users,  load average: 0.02, 0.07, 0.03
+    Elk-1
+    jinig
+    03:52:04 up  3:09,  0 users,  load average: 0.09, 0.05, 0.02
+### Ansible Docker Setup
+    apt install docker.io
+    systemctl enable docker
+    systemctl start docker
+    systemctl status docker
+    docker pull cyberxsecurity/ansible
+
+### Connecting to Ansible
+    docker container list -a
+    docker start goofy_mendeleev
+    docker attach goofy_mendeleev
+
+### Ansible Configuration
+#### /etc/ansible/hosts
+*inventory file with groups of like servers*
+    root@633f48857065:~# cat /etc/ansible/hosts | egrep -v '^#|^$'
+    [webservers]
+    10.0.0.7 ansible_python_interpreter=/usr/bin/python3
+    10.0.0.8 ansible_python_interpreter=/usr/bin/python3
+    10.0.0.9 ansible_python_interpreter=/usr/bin/python3
+    [elkservers]
+    10.2.0.4 ansible_python_interpreter=/usr/bin/python3
+#### /etc/ansible/ansible.cfg
+*main ansible configuration with global settings*
+    root@633f48857065:~# cat /etc/ansible/ansible.cfg | egrep -v '^#|^$'
+    [defaults]
+    remote_user = jinig
+    log_path = /var/log/ansible.log
+    module_name = command
+    [inventory]
+    [privilege_escalation]
+    [paramiko_connection]
+    [ssh_connection]
+    [persistent_connection]
+    [accelerate]
+    [selinux]
+    [colors]
+    [diff]
+#### Testing Ansible Connectivity
+    root@633f48857065:~# ansible webservers -m ping
+    10.0.0.8 | SUCCESS => {
+        "changed": false,
+        "ping": "pong"
+    }
+    10.0.0.9 | SUCCESS => {
+        "changed": false,
+        "ping": "pong"
+    }
+    10.0.0.7 | SUCCESS => {
+        "changed": false,
+        "ping": "pong"
+    }
+    root@633f48857065:~# ansible elkservers -m ping
+    10.2.0.4 | SUCCESS => {
+        "changed": false,
+        "ping": "pong"
+    }
 
 ## DVWA Server Setup
 
