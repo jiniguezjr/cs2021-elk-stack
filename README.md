@@ -173,23 +173,6 @@ The Ubuntu server created in this architecture is solely meant to operate a dock
 
 #### Testing Ansible Connectivity
 
-    root@633f48857065:~# cat /etc/ansible/ansible.cfg | egrep -v '^#|^$'
-    [defaults]
-    remote_user = jinig
-    log_path = /var/log/ansible.log
-    module_name = command
-    [inventory]
-    [privilege_escalation]
-    [paramiko_connection]
-    [ssh_connection]
-    [persistent_connection]
-    [accelerate]
-    [selinux]
-    [colors]
-    [diff]
-
-#### Testing Ansible Connectivity
-
     root@633f48857065:~# ansible webservers -m ping
     10.0.0.8 | SUCCESS => {
         "changed": false,
@@ -210,7 +193,49 @@ The Ubuntu server created in this architecture is solely meant to operate a dock
     }
 
 ## DVWA Server Setup
+The Damn Vulnerable Web Application is used by cybersecurity professionals to test their skills in detecting common vulnerabilities and protecting against them. We use this (link here) Ansible playbook to deploy a docker image to our 3 web servers.
+### Install DVWA using Ansible
 
+    root@633f48857065:/etc/ansible# ansible-playbook roles/pentest.yml
+
+    PLAY [Config Web VM with Docker] ****************************************************************************************************************************************************
+
+    TASK [Gathering Facts] **************************************************************************************************************************************************************
+    ok: [10.0.0.8]
+    ok: [10.0.0.7]
+    ok: [10.0.0.9]
+
+    TASK [docker.io] ********************************************************************************************************************************************************************
+    ok: [10.0.0.8]
+    ok: [10.0.0.9]
+    ok: [10.0.0.7]
+
+    TASK [Install pip3] *****************************************************************************************************************************************************************
+    ok: [10.0.0.7]
+    ok: [10.0.0.8]
+    ok: [10.0.0.9]
+
+    TASK [Install Docker python module] *************************************************************************************************************************************************
+    ok: [10.0.0.8]
+    ok: [10.0.0.9]
+    ok: [10.0.0.7]
+
+    TASK [download and launch a docker web container] ***********************************************************************************************************************************
+    ok: [10.0.0.7]
+    ok: [10.0.0.8]
+    ok: [10.0.0.9]
+
+    TASK [Enable docker service] ********************************************************************************************************************************************************
+    ok: [10.0.0.7]
+    ok: [10.0.0.9]
+    ok: [10.0.0.8]
+
+    PLAY RECAP **************************************************************************************************************************************************************************
+    10.0.0.7                   : ok=6    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+    10.0.0.8                   : ok=6    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+    10.0.0.9                   : ok=6    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+### Verify DVWA is functioning
+*Include link here*
 ## ELK Server Setup 
 ### ELK Configuration
 ### ELK + Beats Setup
