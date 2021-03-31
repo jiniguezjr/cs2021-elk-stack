@@ -42,12 +42,12 @@ Since this was the first time using Azure, the network and server set up was don
 ### Azure Images
 The images below visually represents all of the components needed to set up the servers (hardware, disks, ram, cpu, etc) and network components (subnets, firewalls, , network interfaces, load balancers, etc) required for this architecture. 
 
-*The following points relate to the images below.*
+***The following points relate to the images below.***
 1. The Azure Resource Group, CS2021_RG1, is a logical container that groups together related resources. Tags were added at this level in order to clearly identify resources that are related and to aid in properly associating costs to the right project or customer should you wish to group resources separately.
 2. The virtual machines listed here are named according to their purpose and are placed in the appropriate location and with the minimum required hardware specs to fulfill it's role.
-3. The network security groups.....
+3. The two network security groups shown here include the main one used for the web servers and SSH bastion server and the other one for the ELK server.
 4. A virtual network peering connection is needed in order for resources in different locations (aka regions) to communicate to and from each location.
-5. A load balancer was created to distribute the HTTP traffic amongst the three web servers. A backend pool was configured and is what receives the public IP address which can be configured to resolve using a DNS A or CNAME record (e.g. www.hack-me.com)
+5. A load balancer was created to distribute the HTTP traffic amongst the three web servers. A backend pool was configured and is what receives the public IP address which can be configured to resolve using a DNS A or CNAME record (e.g. www.hackme.com)
 #### 1. Azure Resource Group Items
 <p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-resource-group-list.png" alt="Azure Resource Group List" /></p>
 
@@ -55,13 +55,31 @@ The images below visually represents all of the components needed to set up the 
 <p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-VM-list.png" alt="Azure Virtual Machines" /></p>
 
 #### 3. Azure Network Security Groups
-<p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-main-net-sec-group-rules.png" alt="Azure Network Security Group Rules" /></p>
+<p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-net-sec-group-rules-1.png" alt="cs2021-VNET-NetSecGrp - Network Security Group Rules" /></p>
+
+<p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-net-sec-group-rules-2.png" alt="Elk-1-nsg - Network Security Group Rules" /></p>
 
 #### 4. Azure Virtual Networks Peering Setup
 <p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-virtual-networks-peering-setup.png" alt="Azure Virtual Networks Peering Setup" /></p>
 
 #### 5. Azure Load Balancer Backend Pool 
 <p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-load-balancer-backend-pool.png" alt="Azure Load Balancer Backend Pool" /></p>
+
+## Security Access Policies
+Azure Network Security Group rules are used to filter network traffic to and from Azure resources from external and internal locations. The rules act as the first line of defense that aims to filter traffic from trusted and untrusted sources. The following table describes the rules shown in the images in the **Azure Network Security Groups** section [up above](https://github.com/jiniguezjr/cs2021-elk-stack#3-azure-network-security-groups) and the numbers next to the lines in the image in the **Architecture Diagram** section [here](https://github.com/jiniguezjr/cs2021-elk-stack#architecture-diagram)
+| Network Security Group  | Rule Priority | Line Number | Comments     |
+| :---:                   |    :----:     | :---:       | :---        |
+| cs2021-VNET-NetSecGrp   | 899           | 1           | allow inbound HTTP (TCP port 80) requests to the load balancer from my home IP address    |
+| cs2021-VNET-NetSecGrp   | 900           | 2,3         | allow inbound SSH (TCP port 22) requests to the bastion server from my home IP address   |
+| cs2021-VNET-NetSecGrp   | 910           | n/a         | allow all inbound requests (any protocol and port) from the bastion server to the 3 web servers  |
+| cs2021-VNET-NetSecGrp   | 65000         | n/a         | allow all inbound requests (any protocol and port) from any on virtual network to any on virtual network  |
+| cs2021-VNET-NetSecGrp   | 65001         | n/a         | allow all inbound requests (any protocol and port) from the load balancer to any on virtual network  |
+| cs2021-VNET-NetSecGrp   | 65500         | n/a         | deny all inbound requests (any protocol and port) from any to any   |
+| Elk-1-nsg               | 300           | 3           | allow inbound SSH (TCP port 22) requests from home and bastion server to any on virtual network    |
+| Elk-1-nsg               | 310           | 3           | allow inbound HTTP (TCP port 5601) requests from home and bastion server to any on virtual network    |
+| Elk-1-nsg               | 65000         | n/a         | allow all inbound requests (any protocol and port) from any on virtual network to any on virtual network  |
+| Elk-1-nsg               | 65001         | n/a         | allow all inbound requests (any protocol and port) from the load balancer to any on virtual network  |
+| Elk-1-nsg               | 65500         | n/a         | deny all inbound requests (any protocol and port) from any to any   |
 
 ## Ansible Provisioner Setup 
 
@@ -70,7 +88,6 @@ The images below visually represents all of the components needed to set up the 
 ## ELK Server Setup 
 ### ELK Configuration
 ### ELK + Beats Setup
-## Security Access Policies
 
 ## Author
 
