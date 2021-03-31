@@ -140,7 +140,9 @@ The Ubuntu server created in this architecture is solely meant to operate a dock
 
 ### Ansible Configuration
 #### /etc/ansible/hosts
+
 *inventory file with groups of like servers*
+
     root@633f48857065:~# cat /etc/ansible/hosts | egrep -v '^#|^$'
     [webservers]
     10.0.0.7 ansible_python_interpreter=/usr/bin/python3
@@ -149,7 +151,9 @@ The Ubuntu server created in this architecture is solely meant to operate a dock
     [elkservers]
     10.2.0.4 ansible_python_interpreter=/usr/bin/python3
 #### /etc/ansible/ansible.cfg
+
 *main ansible configuration with global settings*
+
     root@633f48857065:~# cat /etc/ansible/ansible.cfg | egrep -v '^#|^$'
     [defaults]
     remote_user = jinig
@@ -164,7 +168,9 @@ The Ubuntu server created in this architecture is solely meant to operate a dock
     [selinux]
     [colors]
     [diff]
+
 #### Testing Ansible Connectivity
+
     root@633f48857065:~# ansible webservers -m ping
     10.0.0.8 | SUCCESS => {
         "changed": false,
