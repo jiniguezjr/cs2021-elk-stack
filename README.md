@@ -85,6 +85,7 @@ Azure Network Security Group rules are used to filter network traffic to and fro
 The Ubuntu server created in this architecture is solely meant to operate a docker container with Ansible which is used as a central point to deploy infrastructure-as-code configuration sets to web and elk servers. Deployment is done using SSH and a passphrase-less RSA key-pair created under the root user in the Ansible container. The web and elk servers were built using the public key from the Ansible root user and is the only means of connecting to the servers to ensure that there is no manual installation and configuration of applications and system settings on the servers in this architecture. Refer to the [**Architecture Diagram**](https://github.com/jiniguezjr/cs2021-elk-stack#architecture-diagram) as a visual aid.
 ### Ease of Administration
 *create ssh config file for easy connectivity*
+
     jinig@UbuntuBastionProvisioner:~$ touch ~/.ssh/config && chmod -v 0600 ~/.ssh/config
     mode of '/home/jinig/.ssh/config' retained as 0600 (rw-------)
     jinig@UbuntuBastionProvisioner:~$ cat .ssh/config
@@ -110,7 +111,8 @@ The Ubuntu server created in this architecture is solely meant to operate a dock
             IdentityFile ~/.ssh/id_rsa
 
 *verify ssh connectivity*
-    jinig@UbuntuBastionProvisioner:~$ for host in `grep HostName .ssh/config | awk '{print $2}'` ; do ssh jinig@${host} 'hostname;whoami;uptime' ; done
+
+    jinig@UbuntuBastionProvisioner:~$ for host in \`grep HostName .ssh/config | awk '{print $2}'\` ; do ssh jinig@${host} 'hostname;whoami;uptime' ; done
     Web-1
     jinig
     03:52:00 up  3:09,  0 users,  load average: 0.00, 0.01, 0.00
@@ -123,6 +125,7 @@ The Ubuntu server created in this architecture is solely meant to operate a dock
     Elk-1
     jinig
     03:52:04 up  3:09,  0 users,  load average: 0.09, 0.05, 0.02
+
 ### Ansible Docker Setup
     apt install docker.io
     systemctl enable docker
