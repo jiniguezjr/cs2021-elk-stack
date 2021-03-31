@@ -13,57 +13,59 @@ The main reason for this setup of 5 Ubuntu servers on the Azure platform is to h
 3. one (1) publicly-accessible ELK server through HTTP that will collect and monitor system resources and logs of the three DVWA web servers
 
 ## Azure Setup
-Since this was the first time using Azure, the network and server set up was done using the GUI. I will include screenshots of the important components, but, in a nutshell, these are the steps taken to setup the environment shown in the diagram.
+Since this was my first time using Azure, the network and server set up was done using the GUI. I include screenshots of the important components, but, in a nutshell, these are the steps taken to setup the environment shown in the diagram.
 
-1. Register for a free Azure account
+1. **Register** for a **free Azure account**
  
 - 30 day trial with 200$ credit and limit of 4 VMs per region
 
-2. Create an Azure Resource Group to contain all related components of this project
+2. **Create** an **Azure Resource Group** to contain all related components of this project
 
 - virtual machines, networks, load balancers, security groups
 
-3. Create 2 virtual networks; one in West US 2, the other in Central US
+3. **Create 2 virtual networks**; one in West US 2, the other in Central US
 
 - assign IP subnets for the servers
 
-4. Create one Ubuntu bastion server with static IP
+4. **Create one Ubuntu bastion server** with static IP
 
 - install docker and configure it to run persistently
 - install image, cyberxsecurity/ansible
 - enter ansible image and generate root rsa pub/priv key pair
 
-5. Create three Ubuntu servers using ansible public key and same user name on all three web servers
+5. **Create three Ubuntu servers using ansible** public key and same user name on all three web servers
 
-6. Create one Ubuntu ELK server with static IP
+6. **Create one Ubuntu ELK server** with static IP
 
-7. Install and configure DVWA and ELK on web and ELK servers using Ansible playbooks
+7. **Install and configure DVWA and ELK** on web and ELK servers **using Ansible** playbooks
+
+8. **Verify DVWA and ELK work** through browser
 
 ### Azure Images
 The images below visually represents all of the components needed to set up the servers (hardware, disks, ram, cpu, etc) and network components (subnets, firewalls, , network interfaces, load balancers, etc) required for this architecture. 
 
 ***The following points relate to the images below.***
 1. The Azure Resource Group, CS2021_RG1, is a logical container that groups together related resources. Tags were added at this level in order to clearly identify resources that are related and to aid in properly associating costs to the right project or customer should you wish to group resources separately.
-2. The virtual machines listed here are named according to their purpose and are placed in the appropriate location and with the minimum required hardware specs to fulfill it's role.
+2. The virtual machines listed here are named according to their purpose and are placed in the appropriate location and with the minimum required hardware specs to fulfill its role.
 3. The two network security groups shown here include the main one used for the web servers and SSH bastion server and the other one for the ELK server.
 4. A virtual network peering connection is needed in order for resources in different locations (aka regions) to communicate to and from each location.
 5. A load balancer was created to distribute the HTTP traffic amongst the three web servers. A backend pool was configured and is what receives the public IP address which can be configured to resolve using a DNS A or CNAME record (e.g. www.hackme.com)
 #### 1. Azure Resource Group Items
-<p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-resource-group-list.png" alt="Azure Resource Group List" /></p>
+![Azure Resource Group List](Images/ELK-stack-project-1-Azure-resource-group-list.png)
 
 #### 2. Azure Virtual Machines
-<p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-VM-list.png" alt="Azure Virtual Machines" /></p>
+![Azure Virtual Machines](Images/ELK-stack-project-1-Azure-VM-list.png)
 
 #### 3. Azure Network Security Groups
-<p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-net-sec-group-rules-1.png" alt="cs2021-VNET-NetSecGrp - Network Security Group Rules" /></p>
+![cs2021-VNET-NetSecGrp - Network Security Group Rules](Images/ELK-stack-project-1-Azure-net-sec-group-rules-1.png)
 
-<p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-net-sec-group-rules-2.png" alt="Elk-1-nsg - Network Security Group Rules" /></p>
+![Elk-1-nsg - Network Security Group Rules](Images/ELK-stack-project-1-Azure-net-sec-group-rules-2.png)
 
 #### 4. Azure Virtual Networks Peering Setup
-<p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-virtual-networks-peering-setup.png" alt="Azure Virtual Networks Peering Setup" /></p>
+![Azure Virtual Networks Peering Setup](Images/ELK-stack-project-1-Azure-virtual-networks-peering-setup.png)
 
 #### 5. Azure Load Balancer Backend Pool 
-<p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/ELK-stack-project-1-Azure-load-balancer-backend-pool.png" alt="Azure Load Balancer Backend Pool" /></p>
+![Azure Load Balancer Backend Pool](Images/ELK-stack-project-1-Azure-load-balancer-backend-pool.png)
 
 ## Security Access Policies
 Azure Network Security Group rules are used to filter network traffic to and from Azure resources from external and internal locations. The rules act as the first line of defense that aims to filter traffic from trusted and untrusted sources. The following table describes the rules shown in the images in the **Azure Network Security Groups** section [up above](https://github.com/jiniguezjr/cs2021-elk-stack#3-azure-network-security-groups) and the numbers next to the lines in the image in the **Architecture Diagram** section [here](https://github.com/jiniguezjr/cs2021-elk-stack#architecture-diagram)
@@ -235,11 +237,48 @@ The Damn Vulnerable Web Application is used by cybersecurity professionals to te
     10.0.0.8                   : ok=6    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
     10.0.0.9                   : ok=6    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ### Verify DVWA is functioning
-*access load balancer public IP*
-![DVWA available through browser](Images/../Images/ELK-stack-project-1-DVWA-LB-test-access.png)
+*access each DVWA server individually (i.e. with only 1 server online at a time) using the load balancer public IP*
 
-## ELK Server Setup 
-### ELK Configuration
+![DVWA available through browser](Images/ELK-stack-project-1-DVWA-LB-test-access.png)
+
+## ELK Server Setup
+*"ELK" is the acronym for three open source projects: Elasticsearch, Logstash, and Kibana. Elasticsearch is a search and analytics engine. Logstash is a server‑side data processing pipeline that ingests data from multiple sources simultaneously, transforms it, and then sends it to a "stash" like Elasticsearch. Kibana lets users visualize data with charts and graphs in Elasticsearch.* [source: https://elastic.co/what-is/elk-stack] (https://www.elastic.co/what-is/elk-stack)
+
+### Install ELK using Ansible
+    root@633f48857065:/etc/ansible# ansible-playbook --check roles/elk-playbook.yml
+
+    PLAY [Config Web VM with Docker] ****************************************************************************************************************************************************
+    TASK [Gathering Facts] **************************************************************************************************************************************************************
+    ok: [10.2.0.4]
+
+    TASK [Install docker.io] ************************************************************************************************************************************************************
+    ok: [10.2.0.4]
+
+    TASK [Install python-pip3] **********************************************************************************************************************************************************
+    ok: [10.2.0.4]
+
+    TASK [Install Docker python module] *************************************************************************************************************************************************
+    ok: [10.2.0.4]
+
+    TASK [Increase virtual memory] ******************************************************************************************************************************************************
+    skipping: [10.2.0.4]
+
+    TASK [Increase virtual memory on restart] *******************************************************************************************************************************************
+    ok: [10.2.0.4]
+
+    TASK [download and launch a docker elk container] ***********************************************************************************************************************************
+    ok: [10.2.0.4]
+
+    TASK [Enable docker service] ********************************************************************************************************************************************************
+    ok: [10.2.0.4]
+
+    PLAY RECAP **************************************************************************************************************************************************************************
+    10.2.0.4                   : ok=7    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+### Verify ELK is functioning
+*access each DVWA server individually (i.e. with only 1 server online at a time) using the load balancer public IP*
+
+![ELK available through browser](Images)
 ### ELK + Beats Setup
 
 ## Author
