@@ -283,6 +283,7 @@ The Damn Vulnerable Web Application is used by cybersecurity professionals to te
 Beats are *single-purpose data shippers* that send metrics from clients (in this case, the 3 DVWA servers) to the ELK server so that we can closely monitor the usage and health of the clients. The two minimum beats that a cybersecurity professional would want is [metricbeats](https://www.elastic.co/beats/metricbeat) and [filebeat](https://www.elastic.co/beats/filebeat). The former captures statistics about the system resources (e.g. ram, cpu, I/O, network), the later allows you to capture system and application logs for a closer watch on your systems for abnormal and suspicious patterns (i.e. invalid SSH attempts, hardware problems, etc).
 
 **[metricbeat Ansible playbook](Files/metricbeat-playbook.yml)**
+
 **[filebeat Ansible playbook](Files/filebeat-playbook.yml)**
 
 #### Install metricbeat using Ansible
@@ -388,6 +389,11 @@ Beats are *single-purpose data shippers* that send metrics from clients (in this
     10.0.0.9                   : ok=3    changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
 
 ### ELK Server Testing
+The following images depict the filebeat and metricbeat beats working. The first image shows a query of invalid SSH attempts to a DVWA server. The second image is of the metricbeat beat summarizing the system resource usage.
+
+![filebeat log search for ssh logins](Images/ELK-stack-project-1-Kibana-filebeats-log-search-for-ssh-logins.png)
+
+![metricbeat system overview](Images/ELK-stack-project-1-Kibana-metricbeats-overview.png)
 
 ## Author
 
