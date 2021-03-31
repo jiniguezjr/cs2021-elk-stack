@@ -112,7 +112,7 @@ The Ubuntu server created in this architecture is solely meant to operate a dock
 
 *verify ssh connectivity*
 
-    jinig@UbuntuBastionProvisioner:~$ for host in \`grep HostName .ssh/config | awk '{print $2}'\` ; do ssh jinig@${host} 'hostname;whoami;uptime' ; done
+    jinig@UbuntuBastionProvisioner:~$ for host in `grep HostName .ssh/config | awk '{print $2}'` ; do ssh jinig@${host} 'hostname;whoami;uptime' ; done
     Web-1
     jinig
     03:52:00 up  3:09,  0 users,  load average: 0.00, 0.01, 0.00
@@ -193,10 +193,10 @@ The Ubuntu server created in this architecture is solely meant to operate a dock
     }
 
 ## DVWA Server Setup
-The Damn Vulnerable Web Application is used by cybersecurity professionals to test their skills in detecting common vulnerabilities and protecting against them. We use this (link here) Ansible playbook to deploy a docker image to our 3 web servers.
+The Damn Vulnerable Web Application is used by cybersecurity professionals to test their skills in detecting common vulnerabilities and protecting against them. We use [this Ansible playbook](/Files/dvwa-playbook.yml) to deploy a docker image to our 3 web servers.
 ### Install DVWA using Ansible
 
-    root@633f48857065:/etc/ansible# ansible-playbook roles/pentest.yml
+    root@633f48857065:/etc/ansible# ansible-playbook roles/dvwa-playbook.yml
 
     PLAY [Config Web VM with Docker] ****************************************************************************************************************************************************
 
@@ -235,7 +235,9 @@ The Damn Vulnerable Web Application is used by cybersecurity professionals to te
     10.0.0.8                   : ok=6    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
     10.0.0.9                   : ok=6    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ### Verify DVWA is functioning
-*Include link here*
+*access load balancer public IP*
+![DVWA available through browser](Images/../Images/ELK-stack-project-1-DVWA-LB-test-access.png)
+
 ## ELK Server Setup 
 ### ELK Configuration
 ### ELK + Beats Setup
