@@ -1,5 +1,5 @@
 # CS2021-ELK-Stack 
-> This project automates the installation and configuration of an ELK stack deployment on an Ubuntu 18.04 server. In this setup, there are a total of 4 Ubuntu 18.04 servers running on Azure. One server runs the ELK stack, the remaining three are web servers that are used to collect and monitor system resources and logs. Docker and Ansible are used to deploy and configure the web and elk servers.
+> This project automates the installation and configuration of an ELK stack deployment on an Ubuntu 18.04 server. In this setup, there are a total of 5 Ubuntu 18.04 servers running on Azure. One server runs the ELK stack, one server is a bastion host with Ansible running in a Docker container, and the remaining three are web servers, running DVWA,  are used as an example on how to collect and monitor system resources and various log files. 
 
 ## Architecture Diagram
 <p align="center"><img src="https://github.com/jiniguezjr/cs2021-elk-stack/blob/main/Images/CS2021-Project-1-Architecture1.png" alt="CS2021 Project 1 ELK Stack Architecture Diagram" /></p>
