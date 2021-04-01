@@ -395,11 +395,15 @@ The following images show the easy configuration steps necessary once you've ins
 
 ![ELK Beats overview](Images/ELK-stack-project-1-Kibana-configure-beats-overview.png)
 
+#### Configure filebeat to collect metrics
+
 ![ELK filebeat setup 1](Images/ELK-stack-project-1-Kibana-configure-filebeat-1.png)
 
 ![ELK filebeat setup 2](Images/ELK-stack-project-1-Kibana-configure-filebeat-2.png)
 
 ![ELK filebeat setup 3](Images/ELK-stack-project-1-Kibana-configure-filebeat-3.png)
+
+#### Configure metricbeat to collect metrics
 
 ![ELK metricbeat setup 1](Images/ELK-stack-project-1-Kibana-configure-metricbeat-1.png)
 
