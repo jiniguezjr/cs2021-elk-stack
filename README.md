@@ -388,8 +388,29 @@ Beats are *single-purpose data shippers* that send metrics from clients (in this
     10.0.0.8                   : ok=3    changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
     10.0.0.9                   : ok=3    changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
 
+### ELK GUI Beats Setup
+The following images show the easy configuration steps necessary once you've installed the beats using Docker.
+
+*Access ELK GUI to configure filebeat and metricbeat beats*
+
+![ELK Beats overview](Images/ELK-stack-project-1-Kibana-configure-beats-overview.png)
+
+![ELK filebeat setup 1](Images/ELK-stack-project-1-Kibana-configure-filebeat-1.png)
+
+![ELK filebeat setup 2](Images/ELK-stack-project-1-Kibana-configure-filebeat-2.png)
+
+![ELK filebeat setup 3](Images/ELK-stack-project-1-Kibana-configure-filebeat-3.png)
+
+![ELK metricbeat setup 1](Images/ELK-stack-project-1-Kibana-configure-metricbeat-1.png)
+
+![ELK metricbeat setup 2](Images/ELK-stack-project-1-Kibana-configure-metricbeat-2.png)
+
+![ELK metricbeat setup 3](Images/ELK-stack-project-1-Kibana-configure-metricbeat-3.png)
+
 ### ELK Server Testing
-The following images depict the filebeat and metricbeat beats working. The first image shows a query of invalid SSH attempts to a DVWA server. The second image is of the metricbeat beat summarizing the system resource usage.
+The following images depict the filebeat and metricbeat beats working. 
+- The first image shows a query of invalid SSH attempts to a DVWA server. 
+- The second image is of the metricbeat beat summarizing the system resource usage.
 
 ![filebeat log search for ssh logins](Images/ELK-stack-project-1-Kibana-filebeats-log-search-for-ssh-logins.png)
 
